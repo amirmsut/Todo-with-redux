@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { BsPlus } from "react-icons/bs";
+import { BsPlus, BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../redux/actions";
+import { addTodo, updateSearchTerm } from "../redux/actions";
+import FilterButton from "./FilterButton";
 
 const Todo = () => {
     //
     const dispatch = useDispatch();
     const [newTodoText, setNewTodoText] = useState("");
-    console.log(newTodoText);
+    const [searchTerm, setSearchTerm] = useState("");
 
     //
     const handleAddToDo = (text) => {
@@ -19,6 +20,11 @@ const Todo = () => {
             handleAddToDo(newTodoText.trim());
             setNewTodoText("");
         }
+    };
+
+    const handleSearchChange = (value) => {
+        setSearchTerm(value);
+        dispatch(updateSearchTerm(value));
     };
 
     //
@@ -36,7 +42,7 @@ const Todo = () => {
                     onChange={(e) => setNewTodoText(e.target.value)}
                     name="addTodoInput"
                     id="addTodoInput"
-                    placeholder=" Add Todo"
+                    placeholder="Add Todo"
                     className="flex-grow p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
                 />
                 <button
@@ -45,6 +51,25 @@ const Todo = () => {
                 >
                     <BsPlus />
                 </button>
+            </div>
+
+            {/* Filter AND search */}
+            <div className="flex items-center justify-between">
+                <FilterButton />
+                <div className="flex items-center mb-4">
+                    <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => handleSearchChange(e.target.value)}
+                        name="addTodoInput"
+                        id="addTodoInput"
+                        placeholder="Search"
+                        className="flex-grow p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
+                    />
+                    <button className="ml-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        <BsSearch />
+                    </button>
+                </div>
             </div>
         </div>
     );
