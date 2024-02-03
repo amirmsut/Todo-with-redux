@@ -1,9 +1,12 @@
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import Todo from "./components/Todo";
+
 function App() {
     return (
-        <div>
-            <h1 className="text-red-200 text-5xl font-sans">Amir</h1>
-        </div>
+        <Provider store={store}>
+            <Todo />
+        </Provider>
     );
 }
-
 export default App;
